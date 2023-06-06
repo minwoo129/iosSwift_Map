@@ -27,6 +27,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         myMap.showsUserLocation = true
         // Do any additional setup after loading the view.
     }
+    
+    func goLoaction(latitudeValue: CLLocationDegrees, longitudeValue: CLLocationDegrees, delta span :Double) {
+        let pLocation = CLLocationCoordinate2DMake(latitudeValue, longitudeValue)
+        let spanValue = MKCoordinateSpan(latitudeDelta: span, longitudeDelta: span);
+        let pRegion = MKCoordinateRegion(center: pLocation, span: spanValue)
+        myMap.setRegion(pRegion, animated: true)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations:[CLLocation]) {
+        let pLocation = locations.last
+        goLoaction(latitudeValue: (pLocation?.coordinate.latitude)!, longitudeValue: (pLocation?.coordinate.longitude)!, delta: 0.01)
+    }
 
     @IBAction func sgChangeLocation(_ sender: UISegmentedControl) {
     }
